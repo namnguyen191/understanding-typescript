@@ -167,3 +167,4 @@ function generateError(msg, errCode) {
     };
 }
 var res = generateError('An error has occured', 500);
+//# sourceMappingURL=app.js.map
