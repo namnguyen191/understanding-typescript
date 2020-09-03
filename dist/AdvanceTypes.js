@@ -1,5 +1,5 @@
 "use strict";
-var e1 = {
+const e1 = {
     name: 'Max',
     privileges: ['create-server'],
     startDate: new Date()
@@ -21,27 +21,21 @@ function printEmpInfo(emp) {
     }
 }
 printEmpInfo(e1);
-var Car = /** @class */ (function () {
-    function Car() {
-    }
-    Car.prototype.drive = function () {
+class Car {
+    drive() {
         console.log('Car is driving');
-    };
-    return Car;
-}());
-var Truck = /** @class */ (function () {
-    function Truck() {
     }
-    Truck.prototype.drive = function () {
+}
+class Truck {
+    drive() {
         console.log('Truck is driving');
-    };
-    Truck.prototype.loadCargo = function () {
+    }
+    loadCargo() {
         console.log('Loading Cargo...');
-    };
-    return Truck;
-}());
-var v1 = new Car();
-var v2 = new Truck();
+    }
+}
+const v1 = new Car();
+const v2 = new Truck();
 function useVehicle(vehicle) {
     vehicle.drive();
     if (vehicle instanceof Truck) {
@@ -52,7 +46,7 @@ function useVehicle(vehicle) {
 useVehicle(v1);
 useVehicle(v2);
 function moveAnimal(animal) {
-    var speed;
+    let speed;
     switch (animal.type) {
         case 'bird':
             speed = animal.flyingSpeed;
@@ -70,18 +64,18 @@ moveAnimal({
     type: 'horse',
     runningSpeed: 120
 });
-var errorsBag = {
+const errorsBag = {
     email: 'Not a valid email',
     account: 'Wrong username or password'
 };
 // OPTIONAL CHAINING
-var fetchedUserData = {
+const fetchedUserData = {
     id: 'u1',
     name: 'Max',
 };
 //console.log(fetchedUserData?.job?.title);
 // NULL HANDLING
-var aNullValue = null;
-var anotherValue = aNullValue !== null && aNullValue !== void 0 ? aNullValue : 'DEFAULT';
+const aNullValue = null;
+const anotherValue = aNullValue !== null && aNullValue !== void 0 ? aNullValue : 'DEFAULT';
 console.log(anotherValue);
 //# sourceMappingURL=AdvanceTypes.js.map

@@ -8,25 +8,25 @@ function add(n1, n2, showRes, phrase) {
         return n1 + n2;
     }
 }
-var number1 = 2;
-var number2 = 5.8;
-var showRes = true;
-var resultPhrase = 'Result is: ';
+const number1 = 2;
+const number2 = 5.8;
+const showRes = true;
+const resultPhrase = 'Result is: ';
 add(number1, number2, showRes, resultPhrase);
-var num1;
+let num1;
 num1 = 5;
 // num1 = '5'; not allow
-var string1 = 'This is a string';
+let string1 = 'This is a string';
 string1 = 'This is another string';
 // string1 = 5; not allow
 // Object, Array, Tupple type
-var person2 = {
+const person2 = {
     name: 'Nam',
     age: 30
 };
 console.log(person2.age);
 // The following syntax is better
-var person3 = {
+const person3 = {
     name: 'Nam',
     age: 22,
     hobbies: ['Sports', 'Cooking'],
@@ -38,14 +38,13 @@ person3.role.push('admin'); // TS can't catch push
 // person3.role[1] = 3; not allow
 person3.role = [3, 'writer'];
 // person3.role = [3, 'writer', 4]; not allow
-var favAct;
+let favAct;
 // favAct = 'sport'; not allow
 favAct = ['sport'];
-var anyArr;
+let anyArr;
 anyArr = [1, 2, 3];
 anyArr = ['1', '2', '3'];
-for (var _i = 0, _a = person3.hobbies; _i < _a.length; _i++) {
-    var hobby = _a[_i];
+for (const hobby of person3.hobbies) {
     console.log(hobby.toUpperCase());
 }
 // ENUM type
@@ -55,7 +54,7 @@ var Role;
     Role[Role["READ_ONLY"] = 1] = "READ_ONLY";
     Role[Role["AUTHOR"] = 2] = "AUTHOR";
 })(Role || (Role = {})); // By default it link a number to a string ADMIN = 0, READ_ONLY = 1...
-var person4 = {
+const person4 = {
     name: 'Nam',
     age: 22,
     hobbies: ['Sports', 'Cooking'],
@@ -70,7 +69,7 @@ if (person4.role === 0) {
 }
 // ANY type
 // This is a disadvantage cause it by pass all TS check
-var anyType;
+let anyType;
 (anyType = 5), (anyType = '5');
 anyType = {
     name: 'Nam',
@@ -78,7 +77,7 @@ anyType = {
 };
 // UNION type
 function combine(input1, input2) {
-    var res;
+    let res;
     if (typeof input1 === 'number' && typeof input2 === 'number') {
         res = input1 + input2;
     }
@@ -87,15 +86,15 @@ function combine(input1, input2) {
     }
     return res;
 }
-var combineAges = combine(30, 26);
+const combineAges = combine(30, 26);
 console.log(combineAges);
-var combineName = combine('Nam', 'Nguyen');
+const combineName = combine('Nam', 'Nguyen');
 console.log(combineName);
 // LITERAL TYPE
-var PI = 3.14;
-var MY_NAME = 'Nam Nguyen';
+const PI = 3.14;
+const MY_NAME = 'Nam Nguyen';
 function combine2(input1, input2, resConv) {
-    var res;
+    let res;
     if ((typeof input1 === 'number' && typeof input2 === 'number') ||
         resConv === 'as-num') {
         res = +input1 + +input2;
@@ -105,12 +104,12 @@ function combine2(input1, input2, resConv) {
     }
     return res;
 }
-var combineNum = combine2(11, 22, 'as-num');
+const combineNum = combine2(11, 22, 'as-num');
 console.log(combineNum);
-var combineNumString = combine2('11', '22', 'as-num');
+const combineNumString = combine2('11', '22', 'as-num');
 console.log(combineNumString);
 function combine3(input1, input2, resConv) {
-    var res;
+    let res;
     if ((typeof input1 === 'number' && typeof input2 === 'number') ||
         resConv === 'as-num') {
         res = +input1 + +input2;
@@ -136,23 +135,23 @@ function printRes2(num) {
     return;
 }
 // FUNCTION TYPE
-var addFunc;
+let addFunc;
 // addFunc = 5; not allow
-addFunc = function (num1, num2) {
+addFunc = (num1, num2) => {
     return num1 + num2;
 };
 // The callback is define as returning void but it actually doesn't have to, the parent function will just ignore the return value
 function addAndHandle(num1, num2, cb) {
-    var res = num1 + num2;
+    const res = num1 + num2;
     cb(res);
 }
-addAndHandle(18, 22, function (res) {
+addAndHandle(18, 22, (res) => {
     console.log(res);
     return 'A string';
 });
 // UNKNOWN TYPE
-var userInput;
-var userName;
+let userInput;
+let userName;
 userInput = 5;
 userInput = '5';
 // userName = userInput; not allow but will allow for ANY TYPE
@@ -162,9 +161,9 @@ if (typeof userInput === 'string') {
 // THE NEVER TYPE: for infinite loop or throwing errors
 function generateError(msg, errCode) {
     throw {
-        msg: msg,
-        errCode: errCode
+        msg,
+        errCode
     };
 }
-var res = generateError('An error has occured', 500);
+const res = generateError('An error has occured', 500);
 //# sourceMappingURL=app.js.map
