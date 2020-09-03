@@ -159,7 +159,7 @@ function Required(msg: string) {
     return function (target: any, propName: string) {
         registeredValidators[target.constructor.name] = {
             ...registeredValidators[target.constructor.name],
-            [propName]: ['required']
+            [propName]: ['required', ...[propName]]
         };
     };
 }
@@ -173,6 +173,15 @@ function PositiveNumber(target: any, propName: string) {
     };
 }
 
+function LengthGreaterThan(wantedLength: number) {
+    return function (target: any, propName: string) {
+        registeredValidators[target.constructor.name] = {
+            ...registeredValidators[target.constructor.name],
+            [propName]: [wantedLength.toString(), ...[propName]]
+        };
+    };
+}
+
 function validate(obj: any) {
     const objValidatorConfig = registeredValidators[obj.constructor.name];
     if (!objValidatorConfig) {
@@ -183,11 +192,16 @@ function validate(obj: any) {
         for (const validator of objValidatorConfig[prop]) {
             switch (validator) {
                 case 'required':
-                    isValid = isValid && !!obj[prop];
+                    if (!!!obj[prop]) {
+                        isValid = false;
+                    }
                     break;
                 case 'positive':
                     isValid = isValid && obj[prop] > 0;
                     break;
+            }
+            if (Number(validator)) {
+                isValid = isValid && obj[prop].length > Number(validator);
             }
         }
     }
@@ -195,6 +209,7 @@ function validate(obj: any) {
 }
 
 class Course {
+    @LengthGreaterThan(5)
     @Required('This is required')
     title: string;
     @PositiveNumber

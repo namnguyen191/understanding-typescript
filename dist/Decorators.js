@@ -146,12 +146,17 @@ const registeredValidators = {};
 function Required(msg) {
     console.log(msg);
     return function (target, propName) {
-        registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [propName]: ['required'] });
+        registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [propName]: ['required', ...[propName]] });
     };
 }
 function PositiveNumber(target, propName) {
     console.log('PositiveNumber Decorator runs!');
     registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [propName]: ['positive'] });
+}
+function LengthGreaterThan(wantedLength) {
+    return function (target, propName) {
+        registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [propName]: [wantedLength.toString(), ...[propName]] });
+    };
 }
 function validate(obj) {
     const objValidatorConfig = registeredValidators[obj.constructor.name];
@@ -163,11 +168,16 @@ function validate(obj) {
         for (const validator of objValidatorConfig[prop]) {
             switch (validator) {
                 case 'required':
-                    isValid = isValid && !!obj[prop];
+                    if (!!!obj[prop]) {
+                        isValid = false;
+                    }
                     break;
                 case 'positive':
                     isValid = isValid && obj[prop] > 0;
                     break;
+            }
+            if (Number(validator)) {
+                isValid = isValid && obj[prop].length > Number(validator);
             }
         }
     }
@@ -180,6 +190,7 @@ class Course {
     }
 }
 __decorate([
+    LengthGreaterThan(5),
     Required('This is required')
 ], Course.prototype, "title", void 0);
 __decorate([
